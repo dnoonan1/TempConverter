@@ -20,7 +20,7 @@ public class TempConverterApp {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, ERROR_WINDOW_TITLE,
-                    LF_ERROR_MSG,JOptionPane.ERROR_MESSAGE);
+                    LF_ERROR_MSG, JOptionPane.ERROR_MESSAGE);
         }
 
         java.awt.EventQueue.invokeLater(() -> {

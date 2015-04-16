@@ -213,7 +213,7 @@ public class TempConverterWindow extends javax.swing.JFrame {
         try {
             double originalDegrees = Double.parseDouble(txtTemperature.getText());
             double targetDegrees = conversionService.getConverted(originalDegrees);
-            String text = String.format("%.1f%s is %.1f%s",
+            String text = String.format("%.1f %s = %.1f %s",
                     originalDegrees, original.getNotation(), 
                     targetDegrees, target.getNotation());
             lblOutputMsg.setText(text);
