@@ -5,26 +5,28 @@
  */
 package tempconverter;
 
-import java.util.Enumeration;
-import javax.swing.AbstractButton;
-import javax.swing.ButtonModel;
-import javax.swing.JRadioButton;
-import javax.swing.SwingConstants;
+import javax.swing.JOptionPane;
+import strategy.temperature.conversion.TempConversionService;
+import strategy.temperature.conversion.TempScale;
 
 /**
  *
  * @author Dan
  */
-public class TempConverterFrame extends javax.swing.JFrame {
+public class TempConverterWindow extends javax.swing.JFrame {
 
+    TempConversionService conversionService;
+    
+    private static final String ERROR_WINDOW_TITLE = "Error";
+    private static final String INPUT_FORMAT_MSG = "You must enter a decimal "
+            + "number for the input temperature.";
+    
     /**
      * Creates new form TempConverter
      */
-    public TempConverterFrame() {
+    public TempConverterWindow() {
         initComponents();
-        rbCelsius.doClick();
-        rbFahrenheit1.doClick();
-        lblOutputMsg.setHorizontalAlignment(SwingConstants.CENTER);
+        conversionService = new TempConversionService();
     }
 
     /**
@@ -68,9 +70,10 @@ public class TempConverterFrame extends javax.swing.JFrame {
         });
 
         lblDegrees.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        lblDegrees.setText("°");
+        lblDegrees.setText("degrees");
 
         bgInitialScale.add(rbCelsius);
+        rbCelsius.setSelected(true);
         rbCelsius.setText("Celsius");
 
         bgInitialScale.add(rbFahrenheit);
@@ -85,6 +88,7 @@ public class TempConverterFrame extends javax.swing.JFrame {
 
         lblOutputMsg.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         lblOutputMsg.setForeground(new java.awt.Color(0, 51, 255));
+        lblOutputMsg.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
         bgInitialScale.add(rbKelvin);
         rbKelvin.setText("Kelvin");
@@ -93,6 +97,7 @@ public class TempConverterFrame extends javax.swing.JFrame {
         rbCelsius1.setText("Celsius");
 
         bgFinalScale.add(rbFahrenheit1);
+        rbFahrenheit1.setSelected(true);
         rbFahrenheit1.setText("Fahrenheit");
 
         bgFinalScale.add(rbKelvin1);
@@ -111,37 +116,34 @@ public class TempConverterFrame extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(lblOutputMsg, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addGap(114, 114, 114)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(rbFahrenheit)
-                                    .addComponent(rbCelsius)
-                                    .addComponent(rbKelvin)
-                                    .addComponent(jLabel1))
-                                .addGap(40, 40, 40)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(rbCelsius1)
-                                    .addComponent(rbFahrenheit1)
-                                    .addComponent(rbKelvin1)
-                                    .addComponent(jLabel2)))
+                        .addGap(185, 185, 185)
+                        .addComponent(btnConvert))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(126, 126, 126)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(rbFahrenheit)
+                            .addComponent(rbCelsius)
+                            .addComponent(rbKelvin)
+                            .addComponent(jLabel1))
+                        .addGap(40, 40, 40)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(rbCelsius1)
+                            .addComponent(rbFahrenheit1)
+                            .addComponent(rbKelvin1)
+                            .addComponent(jLabel2)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(94, 94, 94)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblOutputMsg, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(lblTemperature)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(txtTemperature, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lblDegrees, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(7, 7, 7)))))
-                .addContainerGap(107, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(btnConvert)
-                .addGap(175, 175, 175))
+                                .addComponent(lblDegrees, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(100, Short.MAX_VALUE))
         );
 
         layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jLabel1, rbCelsius, rbFahrenheit, rbKelvin});
@@ -151,7 +153,7 @@ public class TempConverterFrame extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(57, 57, 57)
+                .addGap(39, 39, 39)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblTemperature, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtTemperature, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -174,11 +176,11 @@ public class TempConverterFrame extends javax.swing.JFrame {
                         .addComponent(rbFahrenheit1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(rbKelvin1)))
-                .addGap(18, 18, 18)
+                .addGap(20, 20, 20)
                 .addComponent(btnConvert)
-                .addGap(13, 13, 13)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblOutputMsg, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(23, Short.MAX_VALUE))
+                .addContainerGap(41, Short.MAX_VALUE))
         );
 
         layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {lblDegrees, lblTemperature, txtTemperature});
@@ -188,67 +190,37 @@ public class TempConverterFrame extends javax.swing.JFrame {
 
     private void btnConvertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConvertActionPerformed
         
-        TempScale original = TempScale.CELSIUS, target = TempScale.CELSIUS;
-        String originalScale = "", targetScale = "";
+        TempScale original, target;
         
         if (rbCelsius.isSelected()) {
             original = TempScale.CELSIUS;
         } else if (rbFahrenheit.isSelected()) {
             original = TempScale.FAHRENHEIT;
-        } else if (rbKelvin.isSelected()) {
+        } else { // rbKelvin.isSelected()
             original = TempScale.KELVIN;
         }
-        originalScale = original.toString().substring(0, 1);
         
         if (rbCelsius1.isSelected()) {
             target = TempScale.CELSIUS;
         } else if (rbFahrenheit1.isSelected()) {
             target = TempScale.FAHRENHEIT;
-        } else if (rbKelvin1.isSelected()) {
+        } else { // rbKelvin1.isSelected()
             target = TempScale.KELVIN;
         }
-        targetScale = target.toString().substring(0, 1);
+
+        conversionService.setOriginalAndTarget(original, target);
         
-        TempConversionService tcs = new TempConversionService();
-        TempConverter c2F, f2C, c2K, k2C, f2K, k2F, identity;
-        
-        c2F = new CelsiusToFahrenheitConverter();
-        f2C = new FahrenheitToCelsiusConverter();
-        c2K = new CelsiusToKelvinConverter();
-        k2C = new KelvinToCelsiusConverter();
-        f2K = new FahrenheitToKelvinConverter();
-        k2F = new KelvinToFahrenheitConverter();
-        identity = new IdentityConverter();
-        
-        if (original == TempScale.CELSIUS
-                && target == TempScale.FAHRENHEIT) {
-            tcs.setConverter(c2F);    
-        } else if (original == TempScale.FAHRENHEIT
-                && target == TempScale.CELSIUS) {
-            tcs.setConverter(f2C);    
-        } else if (original == TempScale.CELSIUS
-                && target == TempScale.KELVIN) {
-            tcs.setConverter(c2K);    
-        } else if (original == TempScale.KELVIN
-                && target == TempScale.CELSIUS) {
-            tcs.setConverter(k2C);    
-        } else if (original == TempScale.FAHRENHEIT
-                && target == TempScale.KELVIN) {
-            tcs.setConverter(f2K);    
-        } else if (original == TempScale.KELVIN
-                && target == TempScale.FAHRENHEIT) {
-            tcs.setConverter(k2F);    
-        } else if (original == target) {
-            tcs.setConverter(identity);
+        try {
+            double originalDegrees = Double.parseDouble(txtTemperature.getText());
+            double targetDegrees = conversionService.getConverted(originalDegrees);
+            String text = String.format("%.1f%s is %.1f%s",
+                    originalDegrees, original.getNotation(), 
+                    targetDegrees, target.getNotation());
+            lblOutputMsg.setText(text);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, INPUT_FORMAT_MSG,
+                    ERROR_WINDOW_TITLE, JOptionPane.ERROR_MESSAGE);
         }
-        
-        double originalDegrees = Double.parseDouble(txtTemperature.getText());
-        double targetDegrees = tcs.getConverted(originalDegrees);
-        String text = String.format("%.1f°%s is %.1f°%s",
-                originalDegrees, originalScale, 
-                targetDegrees, targetScale
-        );
-        lblOutputMsg.setText(text);
         
     }//GEN-LAST:event_btnConvertActionPerformed
 
@@ -273,21 +245,23 @@ public class TempConverterFrame extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(TempConverterFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TempConverterWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(TempConverterFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TempConverterWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(TempConverterFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TempConverterWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TempConverterFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TempConverterWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TempConverterFrame().setVisible(true);
+                new TempConverterWindow().setVisible(true);
             }
         });
     }
