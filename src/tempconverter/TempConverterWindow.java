@@ -20,6 +20,8 @@ public class TempConverterWindow extends javax.swing.JFrame {
     private static final String ERROR_WINDOW_TITLE = "Error";
     private static final String INPUT_FORMAT_MSG = "You must enter a decimal "
             + "number for the input temperature.";
+    private static final String BELOW_ZERO_MSG = "The temperature you enter "
+            + "must be above absolute zero: ";
     
     /**
      * Creates new form TempConverter
@@ -217,8 +219,13 @@ public class TempConverterWindow extends javax.swing.JFrame {
                     originalDegrees, original.getNotation(), 
                     targetDegrees, target.getNotation());
             lblOutputMsg.setText(text);
-        } catch (NumberFormatException e) {
+        } catch (NumberFormatException nf) {
             JOptionPane.showMessageDialog(this, INPUT_FORMAT_MSG,
+                    ERROR_WINDOW_TITLE, JOptionPane.ERROR_MESSAGE);
+        } catch (BelowAbsoluteZeroException baz) {
+            JOptionPane.showMessageDialog(this,
+                    BELOW_ZERO_MSG + original.getAbsoluteZero()
+                            + " " + original.getNotation() + ".",
                     ERROR_WINDOW_TITLE, JOptionPane.ERROR_MESSAGE);
         }
         

@@ -6,7 +6,17 @@ package strategy.temperature.conversion;
  */
 public enum TempScale {
     
-    CELSIUS, FAHRENHEIT, KELVIN;
+    CELSIUS(-273.15), FAHRENHEIT(-459.67), KELVIN(0);
+    
+    private double absoluteZero;
+    
+    TempScale(double absoluteZero) {
+        this.absoluteZero = absoluteZero;
+    }
+    
+    public double getAbsoluteZero() {
+        return absoluteZero;
+    }
     
     public String getNotation() {
         if (this == KELVIN) {

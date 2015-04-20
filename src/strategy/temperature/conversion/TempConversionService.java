@@ -1,5 +1,7 @@
 package strategy.temperature.conversion;
 
+import tempconverter.BelowAbsoluteZeroException;
+
 /**
  *
  * @author Dan
@@ -7,6 +9,8 @@ package strategy.temperature.conversion;
 public class TempConversionService {
 
     private TempConverter converter;
+    private TempScale original;
+    private TempScale target;
     
     private static final TempConverter C2F_CONVERTER = new CelsiusToFahrenheitConverter();
     private static final TempConverter F2C_CONVERTER = new FahrenheitToCelsiusConverter();
@@ -26,6 +30,8 @@ public class TempConversionService {
     }
     
     public void setOriginalAndTarget(TempScale original, TempScale target) {
+        this.original = original;
+        this.target = target;
         if (original == TempScale.CELSIUS
                 && target == TempScale.FAHRENHEIT) {
             setConverter(C2F_CONVERTER);    
@@ -49,7 +55,11 @@ public class TempConversionService {
         }
     }
     
-    public double getConverted(double degrees) {
+    public double getConverted(double degrees)
+            throws BelowAbsoluteZeroException {
+        if (degrees < original.getAbsoluteZero()) {
+            throw new BelowAbsoluteZeroException();
+        }
         return converter.getConverted(degrees);
     }
     
