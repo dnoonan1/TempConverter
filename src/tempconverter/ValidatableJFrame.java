@@ -1,7 +1,8 @@
 package tempconverter;
 
+import java.util.List;
 import javax.swing.JFrame;
-import util.validation.ValidatableWithValidator;
+import util.validation.Validatable;
 
 /**
  *
@@ -9,16 +10,16 @@ import util.validation.ValidatableWithValidator;
  */
 public abstract class ValidatableJFrame extends JFrame {
     
-    private ValidatableWithValidator[] fields;
+    private List<Validatable> validatables;
     
-    public void setFields(ValidatableWithValidator[] fields) {
-        this.fields = fields;
+    public void setValidatables(List<Validatable> validatables) {
+        this.validatables = validatables;
     }
     
     public void validateAll() {
-        for (ValidatableWithValidator field : fields) {
-            if (!field.isValidated()) {
-                showErrorMessage(field.getErrorMessage());
+        for (Validatable v : validatables) {
+            if (!v.isValidated()) {
+                showErrorMessage(v.getErrorMessage());
             }
         }
     }

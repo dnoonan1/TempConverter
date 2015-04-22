@@ -1,7 +1,7 @@
 package tempconverter;
 
 import javax.swing.JTextField;
-import util.validation.ValidatableWithValidator;
+import util.validation.Validatable;
 import util.validation.Validator;
 
 /**
@@ -9,7 +9,7 @@ import util.validation.Validator;
  * @author Dan
  */
 public class ValidatableJTextField
-    extends JTextField implements ValidatableWithValidator<String> {
+    extends JTextField implements Validatable<String> {
     
     private Validator<String> validator;
     private String errorMessage;

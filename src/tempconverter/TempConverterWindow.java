@@ -6,8 +6,7 @@
 package tempconverter;
 
 import javax.swing.JOptionPane;
-import strategy.temperature.conversion.TempConversionService;
-import strategy.temperature.conversion.TempScale;
+import strategy.tempconverter.TempScale;
 
 /**
  *
@@ -209,7 +208,7 @@ public class TempConverterWindow extends javax.swing.JFrame {
         } else { // rbKelvin1.isSelected()
             target = TempScale.KELVIN;
         }
-
+        
         conversionService.setOriginalAndTarget(original, target);
         
         try {
@@ -290,4 +289,5 @@ public class TempConverterWindow extends javax.swing.JFrame {
     private javax.swing.JRadioButton rbKelvin1;
     private javax.swing.JTextField txtTemperature;
     // End of variables declaration//GEN-END:variables
+
 }

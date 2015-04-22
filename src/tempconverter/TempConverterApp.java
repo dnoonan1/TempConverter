@@ -24,7 +24,7 @@ public class TempConverterApp {
         }
 
         java.awt.EventQueue.invokeLater(() -> {
-            new TempConverterWindow().setVisible(true);
+            new TempConverterWindow2().setVisible(true);
         });
         
     }

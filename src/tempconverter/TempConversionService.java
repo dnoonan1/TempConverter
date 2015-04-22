@@ -1,6 +1,14 @@
-package strategy.temperature.conversion;
+package tempconverter;
 
-import tempconverter.BelowAbsoluteZeroException;
+import strategy.tempconverter.CelsiusToFahrenheitConverter;
+import strategy.tempconverter.CelsiusToKelvinConverter;
+import strategy.tempconverter.FahrenheitToCelsiusConverter;
+import strategy.tempconverter.FahrenheitToKelvinConverter;
+import strategy.tempconverter.IdentityConverter;
+import strategy.tempconverter.KelvinToCelsiusConverter;
+import strategy.tempconverter.KelvinToFahrenheitConverter;
+import strategy.tempconverter.TempConverter;
+import strategy.tempconverter.TempScale;
 
 /**
  *

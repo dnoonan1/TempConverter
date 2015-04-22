@@ -1,4 +1,4 @@
-package strategy.temperature.conversion;
+package strategy.tempconverter;
 
 /**
  *
